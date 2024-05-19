@@ -40,7 +40,16 @@ def get_pod_namespace(pod_name):
     ns = {}
     for name, value in module_ns.items():
         if inspect.isfunction(value):
-            ns[name] = inspect.signature(value).parameters
+            function_parm = inspect.signature(value).parameters
+            ar, kw = [], {}
+            for _param in function_parm:
+                _param_name = function_parm[_param].name
+                if function_parm[_param].default == function_parm[_param].empty:
+                    ar.append(_param_name)
+                else:
+                    kw[_param_name] = function_parm[_param].default
+            
+            ns[name] = (ar, kw)
     return ns
 
 if __name__ == "__main__":
