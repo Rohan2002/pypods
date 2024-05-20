@@ -9,7 +9,7 @@ import importlib
 from pypods.errors import PyPodNotFound
 
 PODS_DIRECTORY = "pods"
-PODS_CONFIG = "pod_spec"
+PODS_CONFIG = "pod"
 
 def get_module_namespace(module_name):
     """

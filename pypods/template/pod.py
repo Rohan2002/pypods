@@ -1,6 +1,4 @@
-# Template pod_spec.py file
-from pypods.pods import PodListener
-
+# Template pod.py file
 """
 Write your module's functions in this area.
 
@@ -19,7 +17,9 @@ def function_x(x):
     return a.get_x()
 """
 
+# Don't change anything here!
 if __name__ == "__main__":
+    from pypods.pods import PodListener
     pl = PodListener()  # PodListener will send output back to the pod client.
     msg = (
         pl.read_stdin()
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         # Unpack stdin to get function data
         function_name, args, kwargs = msg["name"], msg["args"], msg["kwargs"]
         try:
-            # Check if function exists in pod_spec module's namespace.
+            # Check if function exists in pod module's namespace.
             # If yes, execute the function and send output back to the pod client.
             # If no, send error back to the pod client.
             if function_name in globals():

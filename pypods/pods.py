@@ -16,7 +16,7 @@ from pypods.errors import PyPodNotStartedError, PyPodResponseError
 
 from bson import dumps, loads
 
-
+VENV_BIN = "Scripts" if os.name == 'nt' else "bin"
 class PodLoader:
     """
     This class is for managing the lifecycle and interactions of a client with a specific pod.
@@ -56,12 +56,12 @@ class PodLoader:
         pod_files = os.listdir(pod_path)
         if f"{PODS_CONFIG}.py" not in pod_files:
             print(f"Creating pod config file {PODS_CONFIG}.py...")
-            pod_spec_file = join(
+            pod_file = join(
                 os.path.dirname(os.path.abspath(__file__)),
                 "template",
                 f"{PODS_CONFIG}.py",
             )
-            shutil.copy(pod_spec_file, pod_path)
+            shutil.copy(pod_file, pod_path)
         req_file = join(pod_path, "requirements.txt")
         if "requirements.txt" not in pod_files:
             print(f"Creating requirements.txt file...")
@@ -74,7 +74,7 @@ class PodLoader:
             print("Creating virtual environment inside pod...")
             venv.create(venv_dir, with_pip=True)
             print("Installing basic pod dependencies...")
-            pip_executable = join(venv_dir, "bin", "pip")
+            pip_executable = join(venv_dir, VENV_BIN, "pip")
             run(
                 [
                     pip_executable,
@@ -117,7 +117,7 @@ class PodLoader:
         if not isinstance(data, bytes):
             raise ValueError("data must be BSON serialized bytes")
         pod_interpreter = join(
-            PODS_DIRECTORY, f"{self.pod_name}", "venv", "bin", "python3"
+            PODS_DIRECTORY, f"{self.pod_name}", "venv", VENV_BIN, "python3"
         )
         if not exists(pod_interpreter):
             raise PyPodNotStartedError("Pod interpreter is missing!")
