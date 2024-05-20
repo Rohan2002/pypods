@@ -20,3 +20,8 @@ class PyPodResponseError(PyPodError):
     """Raised when pod responds with an error"""
 
     pass
+
+class PyPodNotFound(PyPodError):
+    """Raised when pod could not be located"""
+
+    pass

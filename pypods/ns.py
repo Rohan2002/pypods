@@ -6,6 +6,10 @@ Rohan Deshpande
 import inspect
 import importlib
 
+from pypods.errors import PyPodNotFound
+
+PODS_DIRECTORY = "pods"
+PODS_CONFIG = "pod_spec"
 
 def get_module_namespace(module_name):
     """
@@ -21,11 +25,9 @@ def get_module_namespace(module_name):
         module = importlib.import_module(module_name)
         return vars(module)
     except ModuleNotFoundError:
-        print(f"Module '{module_name}' not found.")
-        return None
+        raise PyPodNotFound(f"Module '{module_name}' not found.")
     except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
+        raise Exception(f"An error occurred: {e}")
 
 
 def get_pod_namespace(pod_name):
@@ -39,9 +41,7 @@ def get_pod_namespace(pod_name):
         dict: The namespace containing the function name as the key
         and function signature's parameters as the value.
     """
-    pods_directory = "pods"
-    pod_file = "pod_spec"
-    module_name = f"{pods_directory}.{pod_name}.{pod_file}"
+    module_name = f"{PODS_DIRECTORY}.{pod_name}.{PODS_CONFIG}"
     module_ns = get_module_namespace(module_name)
 
     ns = {}

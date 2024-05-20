@@ -4,11 +4,14 @@ Rohan Deshpande
 """
 
 import sys
+import os
+import shutil
+import venv
 from os.path import exists, join
-from subprocess import PIPE, Popen
+from subprocess import PIPE, Popen, run
 from typing import Any, Dict, Optional
 
-import pypods.ns as ns
+from pypods.ns import *
 from pypods.errors import PyPodNotStartedError, PyPodResponseError
 
 from bson import dumps, loads
@@ -24,6 +27,8 @@ class PodLoader:
     def __init__(self, pod_name: str, namespace: dict) -> None:
         """
         Initialize the PodLoader with the pod name and namespace.
+        If the pod name does not exist in the file system, then it
+        will be automatically created.
 
         Args:
             pod_name (str): The name of the pod associated with this loader.
@@ -32,12 +37,59 @@ class PodLoader:
         self.pod_name = pod_name
         self.namespace = namespace
         self.loaded_functions = []
+        self.create_pod()
+
+    def create_pod(self) -> None:
+        """
+        Create a new pod by setting up the necessary directory structure and dependencies.
+        """
+        # All pods are stored inside PODS_DIRECTORY
+        # Create PODS_DIRECTORY if not exist and pod_name directory if not exist.
+        pod_path = join(PODS_DIRECTORY, self.pod_name)
+        if PODS_DIRECTORY not in os.listdir():
+            print(f"Creating pods storage directory {PODS_DIRECTORY}...")
+            os.makedirs(pod_path)
+        elif self.pod_name not in os.listdir(PODS_DIRECTORY):
+            print(f"Creating pod {self.pod_name} in pods storage...")
+            os.mkdir(pod_path)
+
+        pod_files = os.listdir(pod_path)
+        if f"{PODS_CONFIG}.py" not in pod_files:
+            print(f"Creating pod config file {PODS_CONFIG}.py...")
+            pod_spec_file = join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "template",
+                f"{PODS_CONFIG}.py",
+            )
+            shutil.copy(pod_spec_file, pod_path)
+        req_file = join(pod_path, "requirements.txt")
+        if "requirements.txt" not in pod_files:
+            print(f"Creating requirements.txt file...")
+            with open(req_file, mode="w") as r:
+                r.write(
+                    "-e /Users/rohandeshpande/applications/pods-project/python-pods"
+                )  # TODO: change this path to pypi package
+        venv_dir = join(pod_path, "venv")
+        if "venv" not in pod_files:
+            print("Creating virtual environment inside pod...")
+            venv.create(venv_dir, with_pip=True)
+            print("Installing basic pod dependencies...")
+            pip_executable = join(venv_dir, "bin", "pip")
+            run(
+                [
+                    pip_executable,
+                    "install",
+                    "--disable-pip-version-check",
+                    "-qr",
+                    req_file,
+                ]
+            )
 
     def load_pod(self) -> None:
         """
         Load functions from the pod into the client's namespace.
         """
-        pod_ns = ns.get_pod_namespace(self.pod_name)
+        pod_ns = get_pod_namespace(self.pod_name)
         for function_name in pod_ns:
             args, kwargs = pod_ns[function_name]
             pod_function_name = self.create_a_function(function_name, *args, **kwargs)
@@ -64,12 +116,14 @@ class PodLoader:
         """
         if not isinstance(data, bytes):
             raise ValueError("data must be BSON serialized bytes")
-        pod_interpreter = join("pods", f"{self.pod_name}", "venv", "bin", "python3")
+        pod_interpreter = join(
+            PODS_DIRECTORY, f"{self.pod_name}", "venv", "bin", "python3"
+        )
         if not exists(pod_interpreter):
             raise PyPodNotStartedError("Pod interpreter is missing!")
         stdout, stderr = None, None
         with Popen(
-            [pod_interpreter, "-m", f"pods.{self.pod_name}.pod_spec"],
+            [pod_interpreter, "-m", f"{PODS_DIRECTORY}.{self.pod_name}.{PODS_CONFIG}"],
             stdin=PIPE,
             stdout=PIPE,
             stderr=PIPE,
