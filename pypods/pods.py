@@ -48,6 +48,8 @@ class PodLoader:
         Unload functions loaded from the pod from the client's namespace.
         """
         for loaded_function in self.loaded_functions:
+            if loaded_function not in self.namespace:
+                continue
             del self.namespace[loaded_function]
 
     def send_data(self, data: bytes) -> None:
@@ -60,6 +62,8 @@ class PodLoader:
         Returns:
             tuple: A tuple containing the stdout and stderr from the pod.
         """
+        if not isinstance(data, bytes):
+            raise ValueError("data must be BSON serialized bytes")
         pod_interpreter = join("pods", f"{self.pod_name}", "venv", "bin", "python3")
         if not exists(pod_interpreter):
             raise PyPodNotStartedError("Pod interpreter is missing!")
@@ -156,6 +160,7 @@ class PodListener:
         Args:
             error (str): Error message to be serialized and written.
         """
-        assert isinstance(error, str)
+        if not isinstance(error, str):
+            raise TypeError("Error message should be of type string.")
         sys.stderr.buffer.write(dumps({"error": error}))
         sys.stderr.flush()
