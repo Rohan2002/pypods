@@ -1,3 +1,9 @@
+"""
+PyPods
+Rohan Deshpande
+"""
+
+
 class PyPodError(Exception):
     """Base class PyPodError"""
 

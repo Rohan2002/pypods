@@ -1,3 +1,8 @@
+"""
+PyPods
+Rohan Deshpande
+"""
+
 import inspect
 import importlib
 
@@ -7,10 +12,10 @@ def get_module_namespace(module_name):
     Import a module by name and return its global namespace.
 
     Args:
-    module_name (str): The name of the module to import.
+        module_name (str): The name of the module to import.
 
     Returns:
-    dict: The global namespace of the module.
+        dict: The global namespace of the module.
     """
     try:
         module = importlib.import_module(module_name)
@@ -28,11 +33,11 @@ def get_pod_namespace(pod_name):
     Get the functions within the pod's namespace.
 
     Args:
-    pod_name (str): The name of the pod.
+        pod_name (str): The name of the pod.
 
     Returns:
-    dict: The namespace containing the function name as the key
-    and function signature's parameters as the value.
+        dict: The namespace containing the function name as the key
+        and function signature's parameters as the value.
     """
     pods_directory = "pods"
     pod_file = "pod_spec"
