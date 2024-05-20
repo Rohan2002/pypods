@@ -1,5 +1,7 @@
 import inspect
 import importlib
+
+
 def get_module_namespace(module_name):
     """
     Import a module by name and return its global namespace.
@@ -19,10 +21,12 @@ def get_module_namespace(module_name):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
+
+
 def get_pod_namespace(pod_name):
     """
     Get the functions within the pod's namespace.
-    
+
     Args:
     pod_name (str): The name of the pod.
 
@@ -35,8 +39,6 @@ def get_pod_namespace(pod_name):
     module_name = f"{pods_directory}.{pod_name}.{pod_file}"
     module_ns = get_module_namespace(module_name)
 
-    # TODO: Support class namespace extraction.
-    # Currently only supporting functions.
     ns = {}
     for name, value in module_ns.items():
         if inspect.isfunction(value):
@@ -48,10 +50,6 @@ def get_pod_namespace(pod_name):
                     ar.append(_param_name)
                 else:
                     kw[_param_name] = function_parm[_param].default
-            
+
             ns[name] = (ar, kw)
     return ns
-
-if __name__ == "__main__":
-    ns = get_pod_namespace("test-pod")
-    print(ns)
