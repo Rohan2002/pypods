@@ -14,7 +14,9 @@ This documentation will follow the classic philosophy of [A picture is worth a t
 
 # Terminology
 1. ```pods``` directory stores all the pods that will be used in the current project.
-2. A ```pod``` 
+2. A ```pod``` is a container that contains its own Python interpreter, dependencies, and a ```pod.py``` file that exposes specific functions defined by the user.
+3. A ```pod client``` is a file that calls the specific functions defined by the user.
+4. A ```pod protocol``` is a way to exchange data between the pod and pod client. PyPods uses [binary json or bson](https://bsonspec.org/).
 
 # How to use PyPods?
 
@@ -30,9 +32,9 @@ pl.load_pod()   # Load pod's namespace
 pl.unload_pod() # Unload pod's namespace
 ```
 if ```hello_world_pod``` does not exist then ```PodLoader``` will create a
-```hello_world_pod``` pod inside of the ```pods``` directory. 
+```hello_world_pod``` pod in the ```pods/hello_world_pod/``` directory.
 
-3. Navigate to ```pods/hello_world_pod/``` directory and observe the file structure.
+3. Navigate to ```pods/hello_world_pod/``` directory and observe the file structure. This is your pod.
 
 ```bash
 hello_world_pod/
