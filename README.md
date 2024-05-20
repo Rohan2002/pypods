@@ -96,6 +96,7 @@ pl.unload_pod() # Unload pod's namespace
 ```
 
 This demo shows how PyPod works. You ran a pod function ```foo``` without importing it into the ```client.py``` file!
+See ```example/``` directory for a project example.
 
 # Author
 Rohan Deshpande, PyPods 2024.
