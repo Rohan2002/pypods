@@ -7,11 +7,11 @@ def read_requirements():
 setup(
     name='pypods',
     version=__version__,
-    packages=find_packages(exclude=['tests*', 'pods*']),
+    packages=find_packages(),
     install_requires=read_requirements(),
     author='Rohan Deshpande',
     author_email='rohandeshpande832@gmail.com',
-    description='A lightweight solution to execute Python dependencies in a isolated fashion.',
+    description='A lightweight solution to execute Python dependencies in an isolated fashion.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/Rohan2002/pypods',

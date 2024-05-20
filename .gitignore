@@ -2,6 +2,4 @@ venv
 build
 dist
 *egg-info
-build.sh
-doc_gen.sh
 pytest*
