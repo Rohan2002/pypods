@@ -6,8 +6,12 @@ This documentation will follow the classic philosophy of [A picture is worth a t
 # Problem
 ![problem](./docs/imgs/problem.png)
 
-# How to create a Pod?
+# Solution
+![solution](./docs/imgs/solution.png)
 
+# PyPod 
+
+# How?
 1. Inside your root project directory, create a pods folder.
 2. Create a directory within the pods folder. The name of the directory will be your pod name.
 3. Inside the pod directory, create a ```pod_spec.py``` file. This file represents the actual pod.
