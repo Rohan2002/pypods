@@ -31,6 +31,12 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
+                    <a class="variable" href="#PODS_DIRECTORY">PODS_DIRECTORY</a>
+            </li>
+            <li>
+                    <a class="variable" href="#PODS_CONFIG">PODS_CONFIG</a>
+            </li>
+            <li>
                     <a class="function" href="#get_module_namespace">get_module_namespace</a>
             </li>
             <li>
@@ -68,42 +74,42 @@ Rohan Deshpande</p>
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">import</span> <span class="nn">inspect</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">import</span> <span class="nn">importlib</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">def</span> <span class="nf">get_module_namespace</span><span class="p">(</span><span class="n">module_name</span><span class="p">):</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    Import a module by name and return its global namespace.</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span> <span class="nn">pypods.errors</span> <span class="kn">import</span> <span class="n">PyPodNotFound</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="n">PODS_DIRECTORY</span> <span class="o">=</span> <span class="s2">&quot;pods&quot;</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="n">PODS_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;pod_spec&quot;</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">    Args:</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">        module_name (str): The name of the module to import.</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    Returns:</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="sd">        dict: The global namespace of the module.</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a><span class="k">def</span> <span class="nf">get_pod_namespace</span><span class="p">(</span><span class="n">pod_name</span><span class="p">):</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="sd">    Get the functions within the pod&#39;s namespace.</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="sd">    Args:</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="sd">        pod_name (str): The name of the pod.</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="sd">    Returns:</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="sd">        dict: The namespace containing the function name as the key</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="sd">        and function signature&#39;s parameters as the value.</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="n">pods_directory</span> <span class="o">=</span> <span class="s2">&quot;pods&quot;</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">pod_file</span> <span class="o">=</span> <span class="s2">&quot;pod_spec&quot;</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">module_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pods_directory</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">pod_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">pod_file</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">def</span> <span class="nf">get_module_namespace</span><span class="p">(</span><span class="n">module_name</span><span class="p">):</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    Import a module by name and return its global namespace.</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="sd">    Args:</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">        module_name (str): The name of the module to import.</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">    Returns:</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">        dict: The global namespace of the module.</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="k">raise</span> <span class="n">PyPodNotFound</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="k">def</span> <span class="nf">get_pod_namespace</span><span class="p">(</span><span class="n">pod_name</span><span class="p">):</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="sd">    Get the functions within the pod&#39;s namespace.</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="sd">    Args:</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="sd">        pod_name (str): The name of the pod.</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="sd">    Returns:</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">        dict: The namespace containing the function name as the key</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="sd">        and function signature&#39;s parameters as the value.</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">module_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PODS_DIRECTORY</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">pod_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">PODS_CONFIG</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">module_ns</span> <span class="o">=</span> <span class="n">get_module_namespace</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
 </span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">ns</span> <span class="o">=</span> <span class="p">{}</span>
@@ -124,6 +130,30 @@ Rohan Deshpande</p>
 
 
             </section>
+                <section id="PODS_DIRECTORY">
+                    <div class="attr variable">
+            <span class="name">PODS_DIRECTORY</span>        =
+<span class="default_value">&#39;pods&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PODS_DIRECTORY"></a>
+    
+    
+
+                </section>
+                <section id="PODS_CONFIG">
+                    <div class="attr variable">
+            <span class="name">PODS_CONFIG</span>        =
+<span class="default_value">&#39;pod_spec&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PODS_CONFIG"></a>
+    
+    
+
+                </section>
                 <section id="get_module_namespace">
                             <input id="get_module_namespace-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -135,25 +165,23 @@ Rohan Deshpande</p>
 
     </div>
     <a class="headerlink" href="#get_module_namespace"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_module_namespace-11"><a href="#get_module_namespace-11"><span class="linenos">11</span></a><span class="k">def</span> <span class="nf">get_module_namespace</span><span class="p">(</span><span class="n">module_name</span><span class="p">):</span>
-</span><span id="get_module_namespace-12"><a href="#get_module_namespace-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="get_module_namespace-13"><a href="#get_module_namespace-13"><span class="linenos">13</span></a><span class="sd">    Import a module by name and return its global namespace.</span>
-</span><span id="get_module_namespace-14"><a href="#get_module_namespace-14"><span class="linenos">14</span></a>
-</span><span id="get_module_namespace-15"><a href="#get_module_namespace-15"><span class="linenos">15</span></a><span class="sd">    Args:</span>
-</span><span id="get_module_namespace-16"><a href="#get_module_namespace-16"><span class="linenos">16</span></a><span class="sd">        module_name (str): The name of the module to import.</span>
-</span><span id="get_module_namespace-17"><a href="#get_module_namespace-17"><span class="linenos">17</span></a>
-</span><span id="get_module_namespace-18"><a href="#get_module_namespace-18"><span class="linenos">18</span></a><span class="sd">    Returns:</span>
-</span><span id="get_module_namespace-19"><a href="#get_module_namespace-19"><span class="linenos">19</span></a><span class="sd">        dict: The global namespace of the module.</span>
-</span><span id="get_module_namespace-20"><a href="#get_module_namespace-20"><span class="linenos">20</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="get_module_namespace-21"><a href="#get_module_namespace-21"><span class="linenos">21</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="get_module_namespace-22"><a href="#get_module_namespace-22"><span class="linenos">22</span></a>        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
-</span><span id="get_module_namespace-23"><a href="#get_module_namespace-23"><span class="linenos">23</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-</span><span id="get_module_namespace-24"><a href="#get_module_namespace-24"><span class="linenos">24</span></a>    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-</span><span id="get_module_namespace-25"><a href="#get_module_namespace-25"><span class="linenos">25</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
-</span><span id="get_module_namespace-26"><a href="#get_module_namespace-26"><span class="linenos">26</span></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="get_module_namespace-27"><a href="#get_module_namespace-27"><span class="linenos">27</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="get_module_namespace-28"><a href="#get_module_namespace-28"><span class="linenos">28</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="get_module_namespace-29"><a href="#get_module_namespace-29"><span class="linenos">29</span></a>        <span class="k">return</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_module_namespace-15"><a href="#get_module_namespace-15"><span class="linenos">15</span></a><span class="k">def</span> <span class="nf">get_module_namespace</span><span class="p">(</span><span class="n">module_name</span><span class="p">):</span>
+</span><span id="get_module_namespace-16"><a href="#get_module_namespace-16"><span class="linenos">16</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="get_module_namespace-17"><a href="#get_module_namespace-17"><span class="linenos">17</span></a><span class="sd">    Import a module by name and return its global namespace.</span>
+</span><span id="get_module_namespace-18"><a href="#get_module_namespace-18"><span class="linenos">18</span></a>
+</span><span id="get_module_namespace-19"><a href="#get_module_namespace-19"><span class="linenos">19</span></a><span class="sd">    Args:</span>
+</span><span id="get_module_namespace-20"><a href="#get_module_namespace-20"><span class="linenos">20</span></a><span class="sd">        module_name (str): The name of the module to import.</span>
+</span><span id="get_module_namespace-21"><a href="#get_module_namespace-21"><span class="linenos">21</span></a>
+</span><span id="get_module_namespace-22"><a href="#get_module_namespace-22"><span class="linenos">22</span></a><span class="sd">    Returns:</span>
+</span><span id="get_module_namespace-23"><a href="#get_module_namespace-23"><span class="linenos">23</span></a><span class="sd">        dict: The global namespace of the module.</span>
+</span><span id="get_module_namespace-24"><a href="#get_module_namespace-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="get_module_namespace-25"><a href="#get_module_namespace-25"><span class="linenos">25</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="get_module_namespace-26"><a href="#get_module_namespace-26"><span class="linenos">26</span></a>        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+</span><span id="get_module_namespace-27"><a href="#get_module_namespace-27"><span class="linenos">27</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+</span><span id="get_module_namespace-28"><a href="#get_module_namespace-28"><span class="linenos">28</span></a>    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+</span><span id="get_module_namespace-29"><a href="#get_module_namespace-29"><span class="linenos">29</span></a>        <span class="k">raise</span> <span class="n">PyPodNotFound</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+</span><span id="get_module_namespace-30"><a href="#get_module_namespace-30"><span class="linenos">30</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="get_module_namespace-31"><a href="#get_module_namespace-31"><span class="linenos">31</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -179,20 +207,18 @@ Rohan Deshpande</p>
 
     </div>
     <a class="headerlink" href="#get_pod_namespace"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_pod_namespace-32"><a href="#get_pod_namespace-32"><span class="linenos">32</span></a><span class="k">def</span> <span class="nf">get_pod_namespace</span><span class="p">(</span><span class="n">pod_name</span><span class="p">):</span>
-</span><span id="get_pod_namespace-33"><a href="#get_pod_namespace-33"><span class="linenos">33</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="get_pod_namespace-34"><a href="#get_pod_namespace-34"><span class="linenos">34</span></a><span class="sd">    Get the functions within the pod&#39;s namespace.</span>
-</span><span id="get_pod_namespace-35"><a href="#get_pod_namespace-35"><span class="linenos">35</span></a>
-</span><span id="get_pod_namespace-36"><a href="#get_pod_namespace-36"><span class="linenos">36</span></a><span class="sd">    Args:</span>
-</span><span id="get_pod_namespace-37"><a href="#get_pod_namespace-37"><span class="linenos">37</span></a><span class="sd">        pod_name (str): The name of the pod.</span>
-</span><span id="get_pod_namespace-38"><a href="#get_pod_namespace-38"><span class="linenos">38</span></a>
-</span><span id="get_pod_namespace-39"><a href="#get_pod_namespace-39"><span class="linenos">39</span></a><span class="sd">    Returns:</span>
-</span><span id="get_pod_namespace-40"><a href="#get_pod_namespace-40"><span class="linenos">40</span></a><span class="sd">        dict: The namespace containing the function name as the key</span>
-</span><span id="get_pod_namespace-41"><a href="#get_pod_namespace-41"><span class="linenos">41</span></a><span class="sd">        and function signature&#39;s parameters as the value.</span>
-</span><span id="get_pod_namespace-42"><a href="#get_pod_namespace-42"><span class="linenos">42</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="get_pod_namespace-43"><a href="#get_pod_namespace-43"><span class="linenos">43</span></a>    <span class="n">pods_directory</span> <span class="o">=</span> <span class="s2">&quot;pods&quot;</span>
-</span><span id="get_pod_namespace-44"><a href="#get_pod_namespace-44"><span class="linenos">44</span></a>    <span class="n">pod_file</span> <span class="o">=</span> <span class="s2">&quot;pod_spec&quot;</span>
-</span><span id="get_pod_namespace-45"><a href="#get_pod_namespace-45"><span class="linenos">45</span></a>    <span class="n">module_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pods_directory</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">pod_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">pod_file</span><span class="si">}</span><span class="s2">&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_pod_namespace-34"><a href="#get_pod_namespace-34"><span class="linenos">34</span></a><span class="k">def</span> <span class="nf">get_pod_namespace</span><span class="p">(</span><span class="n">pod_name</span><span class="p">):</span>
+</span><span id="get_pod_namespace-35"><a href="#get_pod_namespace-35"><span class="linenos">35</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="get_pod_namespace-36"><a href="#get_pod_namespace-36"><span class="linenos">36</span></a><span class="sd">    Get the functions within the pod&#39;s namespace.</span>
+</span><span id="get_pod_namespace-37"><a href="#get_pod_namespace-37"><span class="linenos">37</span></a>
+</span><span id="get_pod_namespace-38"><a href="#get_pod_namespace-38"><span class="linenos">38</span></a><span class="sd">    Args:</span>
+</span><span id="get_pod_namespace-39"><a href="#get_pod_namespace-39"><span class="linenos">39</span></a><span class="sd">        pod_name (str): The name of the pod.</span>
+</span><span id="get_pod_namespace-40"><a href="#get_pod_namespace-40"><span class="linenos">40</span></a>
+</span><span id="get_pod_namespace-41"><a href="#get_pod_namespace-41"><span class="linenos">41</span></a><span class="sd">    Returns:</span>
+</span><span id="get_pod_namespace-42"><a href="#get_pod_namespace-42"><span class="linenos">42</span></a><span class="sd">        dict: The namespace containing the function name as the key</span>
+</span><span id="get_pod_namespace-43"><a href="#get_pod_namespace-43"><span class="linenos">43</span></a><span class="sd">        and function signature&#39;s parameters as the value.</span>
+</span><span id="get_pod_namespace-44"><a href="#get_pod_namespace-44"><span class="linenos">44</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="get_pod_namespace-45"><a href="#get_pod_namespace-45"><span class="linenos">45</span></a>    <span class="n">module_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PODS_DIRECTORY</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">pod_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">PODS_CONFIG</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="get_pod_namespace-46"><a href="#get_pod_namespace-46"><span class="linenos">46</span></a>    <span class="n">module_ns</span> <span class="o">=</span> <span class="n">get_module_namespace</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
 </span><span id="get_pod_namespace-47"><a href="#get_pod_namespace-47"><span class="linenos">47</span></a>
 </span><span id="get_pod_namespace-48"><a href="#get_pod_namespace-48"><span class="linenos">48</span></a>    <span class="n">ns</span> <span class="o">=</span> <span class="p">{}</span>
