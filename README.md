@@ -9,8 +9,8 @@ This documentation will follow the classic philosophy of [A picture is worth a t
 # Solution
 ![solution](./docs/imgs/solution.png)
 
-# PyPod 
-
+# PyPod 🔎
+![solution-magnified](./docs/imgs/pypod.png)
 # How?
 1. Inside your root project directory, create a pods folder.
 2. Create a directory within the pods folder. The name of the directory will be your pod name.
