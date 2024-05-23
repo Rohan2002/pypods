@@ -67,8 +67,8 @@ class PodLoader:
             print(f"Creating requirements.txt file...")
             with open(req_file, mode="w") as r:
                 r.write(
-                    "-e /Users/rohandeshpande/applications/pods-project/python-pods"
-                )  # TODO: change this path to pypi package
+                    "pypods"
+                )  # Testing: -e /Users/rohandeshpande/applications/pods-project/python-pods
         gitignore_file = join(pod_path, ".gitignore")
         if ".gitignore" not in pod_files:
             print(f"Creating .gitignore file...")
