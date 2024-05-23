@@ -3,6 +3,8 @@
 A lightweight solution to execute Python dependencies in an isolated fashion.
 
 This documentation will follow the classic philosophy of [A picture is worth a thousand words](https://en.wikipedia.org/wiki/A_picture_is_worth_a_thousand_words)
+[![PyPI version](https://img.shields.io/pypi/v/pypods.svg)](https://pypi.org/project/pypods/)
+
 # Problem
 ![problem](https://github.com/Rohan2002/pypods/blob/main/docs/imgs/problem.png?raw=true)
 

@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 from pypods import __version__
 def read_requirements():
     with open('requirements.txt') as req:
@@ -7,7 +7,7 @@ def read_requirements():
 setup(
     name='pypods',
     version=__version__,
-    packages=find_packages(),
+    packages=["pypods", "pypods.template"],
     install_requires=read_requirements(),
     author='Rohan Deshpande',
     author_email='rohandeshpande832@gmail.com',
