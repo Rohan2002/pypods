@@ -69,6 +69,13 @@ class PodLoader:
                 r.write(
                     "-e /Users/rohandeshpande/applications/pods-project/python-pods"
                 )  # TODO: change this path to pypi package
+        gitignore_file = join(pod_path, ".gitignore")
+        if ".gitignore" not in pod_files:
+            print(f"Creating .gitignore file...")
+            with open(gitignore_file, mode="w") as r:
+                r.write(
+                    "venv"
+                )
         venv_dir = join(pod_path, "venv")
         if "venv" not in pod_files:
             print("Creating virtual environment inside pod...")
@@ -153,6 +160,8 @@ class PodLoader:
                     error = loads(stderr)["error"]
                     raise PyPodResponseError(error)
                 function_output = loads(stdout)["response"]
+            except PyPodResponseError as e:
+                raise PyPodResponseError(f"PyPodResponseError: {e}")
             except Exception as e:
                 raise Exception(f"Unknown error: {e}")
             return function_output
