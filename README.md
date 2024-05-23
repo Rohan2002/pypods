@@ -4,13 +4,13 @@ A lightweight solution to execute Python dependencies in an isolated fashion.
 
 This documentation will follow the classic philosophy of [A picture is worth a thousand words](https://en.wikipedia.org/wiki/A_picture_is_worth_a_thousand_words)
 # Problem
-![problem](./docs/imgs/problem.png)
+![problem](https://github.com/Rohan2002/pypods/blob/main/docs/imgs/problem.png?raw=true)
 
 # Solution
-![solution](./docs/imgs/solution.png)
+![solution](https://github.com/Rohan2002/pypods/blob/main/docs/imgs/solution.png?raw=true)
 
 # PyPod 🔎
-![solution-magnified](./docs/imgs/pypod.png)
+![solution-magnified](https://github.com/Rohan2002/pypods/blob/main/docs/imgs/pypod.png?raw=true)
 
 # Terminology
 1. ```pods``` directory stores all the pods that will be used in the current project.
