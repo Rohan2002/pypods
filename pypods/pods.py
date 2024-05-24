@@ -17,6 +17,21 @@ from pypods.errors import PyPodNotStartedError, PyPodResponseError
 from bson import dumps, loads
 
 VENV_BIN = "Scripts" if os.name == 'nt' else "bin"
+
+class Object(object):
+    """
+        The pod_name attribute in PodLoader will be assigned Object() in the client's namespace
+        so that we can add attributes to the pod_name. Why we need attributes?
+
+        Let's say the pod_name is hello_world and hello_world has a function foo.
+        
+        If a client loads the hello_world pod then the client can call hello_world.foo() rather
+        than just foo().
+
+        The intention of this approach is to scope the pod's functions using the pod as a wrapper. 
+        Scoping will avoid polluting the client's namespace with similar function names but from different pods.
+    """
+    pass
 class PodLoader:
     """
     This class is for managing the lifecycle and interactions of a client with a specific pod.
@@ -36,8 +51,6 @@ class PodLoader:
         """
         self.pod_name = pod_name
         self.namespace = namespace
-        self.loaded_functions = []
-
     def create_pod(self) -> None:
         """
         Create a new pod by setting up the necessary directory structure and dependencies.
@@ -98,20 +111,19 @@ class PodLoader:
         if not str.isidentifier(self.pod_name):
             raise ValueError(f"pod_name: {self.pod_name} should be a valid python identifier")
         self.create_pod()
+        self.namespace[self.pod_name] = Object()
+
         pod_ns = get_pod_namespace(self.pod_name)
         for function_name in pod_ns:
             args, kwargs = pod_ns[function_name]
-            pod_function_name = self.create_a_function(function_name, *args, **kwargs)
-            self.loaded_functions.append(pod_function_name)
+            self.create_a_function(function_name, *args, **kwargs)
 
     def unload_pod(self) -> None:
         """
-        Unload functions loaded from the pod from the client's namespace.
+        Unload pod object from the client's namespace.
         """
-        for loaded_function in self.loaded_functions:
-            if loaded_function not in self.namespace:
-                continue
-            del self.namespace[loaded_function]
+        if self.pod_name in self.namespace:
+            del self.namespace[self.pod_name]
 
     def send_data(self, data: bytes) -> None:
         """
@@ -167,9 +179,7 @@ class PodLoader:
             except Exception as e:
                 raise Exception(f"Unknown error: {e}")
             return function_output
-
-        self.namespace[func_name] = rpc_proxy_function
-        return func_name
+        self.namespace[self.pod_name].__setattr__(func_name, rpc_proxy_function)
 
 
 class PodListener:

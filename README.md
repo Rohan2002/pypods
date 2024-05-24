@@ -157,8 +157,8 @@ from pypods.pods import PodLoader
 # name of the pod, and namespace to inject pod's functions.
 pl = PodLoader("hello_world_pod", globals())
 pl.load_pod()   # Load pod's namespace (This will now load the foo function).
-foo_output = foo(1, 2) # Expected output = 1 + 2 = 3.
-module_func_output = foo_in_module_test() # Expected output = "foo_in_module_test"
+foo_output = hello_world_pod.foo(1, 2) # Expected output = 1 + 2 = 3.
+module_func_output = hello_world_pod.foo_in_module_test() # Expected output = "foo_in_module_test"
 pl.unload_pod() # Unload pod's namespace
 ```
 
@@ -172,6 +172,8 @@ See ```example/``` directory for a project example.
 1. If your project has a monolithic architecture, you can seperate your dependencies using PyPods!
 2. If your project wants to test a library standalone then you can isolate it via PyPods.
 
+# Run tests
+From project root directory run ```python3 -m unittest tests.test_name```
 # Author
 Rohan Deshpande, PyPods 2024.
 Inspired by the idea of [Babashka pods](https://github.com/babashka/pods).

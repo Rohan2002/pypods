@@ -36,13 +36,14 @@ class TestPodLoader(unittest.TestCase):
         pl.load_pod()
 
         # Call functions and check expected == actual output.
-        foo_out = pl.namespace["foo1"](1, 2)
+        test_pod_object = pl.namespace["test_pod"]
+        foo_out = test_pod_object.foo1(1, 2)
         self.assertEqual(foo_out, 3)
         
-        foo2_out = pl.namespace["foo2"]()
+        foo2_out = test_pod_object.foo2()
         self.assertEqual(foo2_out, "A")
 
-        foo3_out = pl.namespace["foo3"]()
+        foo3_out = test_pod_object.foo3()
         expected = None
         with open(join(fixture_dir, "obj.json"), mode="r") as o:
             expected = json.load(o)
@@ -50,9 +51,9 @@ class TestPodLoader(unittest.TestCase):
 
         # Invalid function calls.
         with self.assertRaises(expected_exception=PyPodResponseError):
-            foo2_bad_out = pl.namespace["foo2"]("No-arg") # No arg should be provided for foo2
+            foo2_bad_out = test_pod_object.foo2("No-arg") # No arg should be provided for foo2
         
-        # Unload functions from namespace.
+        # # Unload functions from namespace.
         pl.unload_pod()
         self.assertEqual(len(pl.namespace), 0)
 
