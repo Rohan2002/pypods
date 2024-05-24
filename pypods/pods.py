@@ -208,7 +208,7 @@ class PodListener:
                 "args",
                 "kwargs",
             }.issubset(func_param):
-                raise ValueError("Corrupt pod input!")
+                raise Exception("Corrupt pod input!")
         except Exception as e:
             func_param = None
             self.write_stderr(str(e))
@@ -238,4 +238,4 @@ class PodListener:
         if not isinstance(error, str):
             raise TypeError("Error message should be of type string.")
         sys.stderr.buffer.write(dumps({"error": error}))
-        sys.stderr.flush()
+        sys.stderr.buffer.flush()
