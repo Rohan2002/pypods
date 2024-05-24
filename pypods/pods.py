@@ -34,6 +34,8 @@ class PodLoader:
             pod_name (str): The name of the pod associated with this loader.
             namespace (dict): The namespace dictionary where pod functions are loaded.
         """
+        if not str.isidentifier(pod_name):
+            raise ValueError(f"pod_name: {pod_name} should be a valid python identifier")
         self.pod_name = pod_name
         self.namespace = namespace
         self.loaded_functions = []
