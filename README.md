@@ -6,6 +6,8 @@ This documentation will follow the classic philosophy of [A picture is worth a t
 
 [![PyPI version](https://img.shields.io/pypi/v/pypods.svg)](https://pypi.org/project/pypods/)
 
+[PyPods API Documentation](https://rohan2002.github.io/pypods/pypods.html)
+
 # Problem
 ![problem](https://github.com/Rohan2002/pypods/blob/main/docs/imgs/problem.png?raw=true)
 
