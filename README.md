@@ -177,5 +177,5 @@ See ```example/``` directory for a project example.
 # Run tests
 From project root directory run ```python3 -m unittest tests.test_name```
 # Author
-Rohan Deshpande, PyPods 2024.
+Rohan, PyPods 2024.
 Inspired by the idea of [Babashka pods](https://github.com/babashka/pods).
